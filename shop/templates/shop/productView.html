@@ -1,0 +1,62 @@
+{% extends 'shop/basic.html' %}
+
+<title> {%block title%} {{item.product_name}} --DigiShop {%endblock%}</title>
+
+{%block body%}
+
+<div class="container my-4">
+    <div class="row">
+    <div class="col md-4">
+    <div class="row">
+        <img src="/media/{{item.image}}" width="330px" height="360px">
+    </div>
+        <div class="row my-4">
+            <button class="btn btn-primary mx-3">Buy Now</button>
+            <button class="btn btn-primary">Add To Cart</button>
+        </div>
+
+    </div>
+
+    <div class="col-md-8">
+        <h5>{{item.product_name}}</h5>
+        <p><b>Rs.{{item.product_price}} </b></p>
+        <p>{{item.product_desc}}</p>
+    </div>
+    </div>
+</div>
+
+
+{%block js%}
+ 
+<script>
+  if(localStorage.getItem('cart') == null){
+  var cart = {};
+  }
+  else
+  {
+  cart = JSON.parse(localStorage.getItem('cart'));
+  
+  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+  $('.cart').click(function(){
+  var idstr = this.id.toString();
+  if (cart[idstr] !=undefined){
+  cart[idstr] = cart[idstr] + 1;
+  }
+  else
+  {
+  cart[idstr] = 1;
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  });
+  
+  $('#popcart').popover();
+  document.getElementById("popcart").setAttribute('data-content', '<h5>Wish-List Products here!</h5>');
+  </script>
+
+{%endblock%}
+
+
+
+{%endblock%}
